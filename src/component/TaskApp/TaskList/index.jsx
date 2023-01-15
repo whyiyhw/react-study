@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import TaskItem from "./TaskItem";
+import TaskListCss from "./index.module.css";
 
 class TaskList extends Component {
     handlerMouseEnter = (e) => {
@@ -14,7 +15,7 @@ class TaskList extends Component {
         const {taskList} = this.props
 
         return (
-            <>
+            <div className={TaskListCss.container}>
                 {
                     taskList.map((task, index) => {
                         return (
@@ -25,7 +26,7 @@ class TaskList extends Component {
                         )
                     })
                 }
-            </>
+            </div>
         );
     }
 }
