@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import TaskItem from "./TaskItem";
 import TaskListCss from "./index.module.css";
 
@@ -12,21 +12,32 @@ class TaskList extends Component {
         this.props.handlerMouseInRangeChange(key, false)
     }
 
-    handlerOnChange = (e) => {
-        console.log(e.target)
+    handlerClickDel = (e, key) => {
+        this.props.handlerClickDel(key)
+    }
+
+    handlerClickCompleted = (e, key) => {
+        this.props.handlerClickCompleted(key)
     }
 
     render() {
-        const { taskList } = this.props
+        const {taskList} = this.props
 
         return (
             <div className={TaskListCss.container}>
                 {
                     taskList.map((task, index) => {
                         return (
-                            <TaskItem taskName={task.name} mouseInRange={task.mouseInRange} index={index} key={index}
-                                handlerMouseEnter={this.handlerMouseEnter}
-                                handlerMouseLeave={this.handlerMouseLeave}
+                            <TaskItem taskName={task.name}
+                                      isDeleted={task.isDeleted}
+                                      isComplete={task.isComplete}
+                                      mouseInRange={task.mouseInRange}
+                                      index={index}
+                                      key={index}
+                                      handlerMouseEnter={this.handlerMouseEnter}
+                                      handlerMouseLeave={this.handlerMouseLeave}
+                                      handlerClickDel={this.handlerClickDel}
+                                      handlerClickCompleted={this.handlerClickCompleted}
                             />
                         )
                     })
