@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import TaskItemCss from "./index.module.css";
 class TaskItem extends Component {
 
@@ -7,17 +7,19 @@ class TaskItem extends Component {
             taskName,
             mouseInRange,
             handlerMouseEnter,
-            handlerMouseLeave
+            handlerMouseLeave,
+            index,
         } = this.props;
 
         return (
-            <div className={TaskItemCss.input}>
-                <input type="checkbox" checked={false} style={{backgroundColor: mouseInRange ? '#cccccc' : "#6e6464"}}
-                       onMouseEnter={handlerMouseEnter}
-                       onMouseLeave={handlerMouseLeave}
-                />
+            <div className={TaskItemCss.input}
+                onMouseEnter={e => handlerMouseEnter(e, index)}
+                onMouseLeave={e => handlerMouseLeave(e, index)} >
+
+                <input type="checkbox" />
                 <label>{taskName}</label>
-                <button style={{display: mouseInRange ? 'block' : 'none'}}>删除</button>
+                <button style={{ display: mouseInRange ? 'block' : 'none' }}>删除</button>
+
             </div>
         );
     }
