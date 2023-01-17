@@ -9,9 +9,9 @@ class TaskApp extends Component {
     state = {
         inputValue: "",
         taskList: [
-            {name: "123", mouseInRange: false, isDeleted: false, isComplete: false},
-            {name: "456", mouseInRange: false, isDeleted: false, isComplete: false},
-            {name: "789", mouseInRange: false, isDeleted: false, isComplete: false},
+            {name: "123", isDeleted: false, isComplete: false},
+            {name: "456", isDeleted: false, isComplete: false},
+            {name: "789", isDeleted: false, isComplete: false},
         ],
     }
 
@@ -19,12 +19,12 @@ class TaskApp extends Component {
         // 回车键  提交数据
         if (e.keyCode === 13) {
             const {taskList, inputValue} = this.state
-            taskList.push({
-                name: inputValue,
-                mouseInRange: false,
-                isDeleted: false,
-                isComplete: false,
-            })
+            if (inputValue.trim() === "") {
+                alert("输入不能为空")
+                return
+            }
+
+            taskList.push({name: inputValue, isDeleted: false, isComplete: false})
 
             this.setState({
                 inputValue: "",
@@ -36,14 +36,6 @@ class TaskApp extends Component {
     handlerChange = (e) => {
         this.setState({
             inputValue: e.target.value
-        })
-    }
-
-    handlerMouseInRangeChange = (index, mouseInRange) => {
-        const {taskList} = this.state
-        taskList[index].mouseInRange = mouseInRange
-        this.setState({
-            taskList: taskList
         })
     }
 
@@ -82,7 +74,6 @@ class TaskApp extends Component {
             <div className={TaskAppCss.container}>
                 <TaskInput inputValue={inputValue} onKeyDown={this.handlerKeyDown} onChange={this.handlerChange}/>
                 <TaskList taskList={taskList}
-                          handlerMouseInRangeChange={this.handlerMouseInRangeChange}
                           handlerClickDel={this.handlerClickDel}
                           handlerClickCompleted={this.handlerClickCompleted}
                 />

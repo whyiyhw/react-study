@@ -4,14 +4,6 @@ import TaskListCss from "./index.module.css";
 
 class TaskList extends Component {
 
-    handlerMouseEnter = (e, key) => {
-        this.props.handlerMouseInRangeChange(key, true)
-    }
-
-    handlerMouseLeave = (e, key) => {
-        this.props.handlerMouseInRangeChange(key, false)
-    }
-
     handlerClickDel = (e, key) => {
         this.props.handlerClickDel(key)
     }
@@ -34,8 +26,6 @@ class TaskList extends Component {
                                       mouseInRange={task.mouseInRange}
                                       index={index}
                                       key={index}
-                                      handlerMouseEnter={this.handlerMouseEnter}
-                                      handlerMouseLeave={this.handlerMouseLeave}
                                       handlerClickDel={this.handlerClickDel}
                                       handlerClickCompleted={this.handlerClickCompleted}
                             />

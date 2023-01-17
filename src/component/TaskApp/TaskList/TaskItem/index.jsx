@@ -3,7 +3,17 @@ import TaskItemCss from "./index.module.css";
 
 class TaskItem extends Component {
 
+    state = {
+        mouseInRange: false,
+    }
+
     checkbox = React.createRef()
+
+    handlerMouseInRangeChange = (moveIn) => {
+        this.setState({
+            mouseInRange: moveIn
+        })
+    }
 
     componentDidMount() {
         this.checkbox.current.checked = this.props.isComplete
@@ -14,11 +24,10 @@ class TaskItem extends Component {
     }
 
     render() {
+        const {mouseInRange} = this.state
+
         const {
             taskName,
-            mouseInRange,
-            handlerMouseEnter,
-            handlerMouseLeave,
             handlerClickDel,
             handlerClickCompleted,
             isDeleted,
@@ -28,11 +37,12 @@ class TaskItem extends Component {
 
         return (
             <div className={TaskItemCss.input}
-                 onMouseEnter={e => handlerMouseEnter(e, index)}
-                 onMouseLeave={e => handlerMouseLeave(e, index)}
+                 onMouseEnter={() => this.handlerMouseInRangeChange(true)}
+                 onMouseLeave={() => this.handlerMouseInRangeChange(false)}
                  style={{display: isDeleted ? "none" : "flex"}}>
 
-                <input type="checkbox" ref={this.checkbox} onChange={e => handlerClickCompleted(e, index)} defaultChecked={isComplete}/>
+                <input type="checkbox" ref={this.checkbox} onChange={e => handlerClickCompleted(e, index)}
+                       defaultChecked={isComplete}/>
                 <label style={{textDecoration: isComplete ? "line-through" : "none"}}> {taskName} </label>
                 <button style={{display: mouseInRange ? 'block' : 'none'}}
                         onClick={e => handlerClickDel(e, index)}>删除
