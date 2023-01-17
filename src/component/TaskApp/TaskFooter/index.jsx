@@ -1,29 +1,30 @@
-import React, {Component} from 'react';
+import React, {useState} from 'react';
 import footer from './index.module.css';
 
-class TaskFooter extends Component {
-    render() {
-        const {taskList,completedAll} = this.props
+export default function TaskFooter(props) {
 
-        const taskDown = taskList.filter((task) => {
-            return task.isComplete === true && task.isDeleted === false
-        }).length
+    const [onMouseInRange, setOnMouseInRange] = useState(false);
+    const {taskList, completedAll, clearCompletedAll} = props
 
-        const taskCount = taskList.filter((task) => {
-            return task.isDeleted === false
-        }).length
+    const taskDown = taskList.reduce((perv, task) =>
+            perv + ((task.isComplete === true && task.isDeleted === false) ? 1 : 0)
+        , 0)
 
+    const taskCount = taskList.reduce((perv, task) => perv + (task.isDeleted ? 0 : 1), 0)
+    const isHide = {display: onMouseInRange ? 'block' : "none"}
 
-        return (
-            <div className={footer.container}>
+    const checked = taskDown === taskCount && taskCount > 0;
 
-                <input type="checkbox" onChange={completedAll}/>
-                <label style={{display: "block"}}>
-                    已完成{taskDown} / 全部{taskCount}
-                </label>
-            </div>
-        );
-    }
+    return (
+        <div className={footer.container}
+             onMouseEnter={() => setOnMouseInRange(true)}
+             onMouseLeave={() => setOnMouseInRange(false)}
+        >
+            <input checked={checked} type="checkbox" onChange={e => completedAll(e)}/>
+            <label style={{display: "block"}}>
+                已完成{taskDown} / 全部{taskCount}
+            </label>
+            <button onClick={clearCompletedAll} style={isHide}>清除已完成任务</button>
+        </div>
+    );
 }
-
-export default TaskFooter;

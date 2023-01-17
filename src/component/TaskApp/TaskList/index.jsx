@@ -5,7 +5,9 @@ import TaskListCss from "./index.module.css";
 class TaskList extends Component {
 
     handlerClickDel = (e, key) => {
-        this.props.handlerClickDel(key)
+        if (window.confirm("确定删除吗？")) {
+            this.props.handlerClickDel(key)
+        }
     }
 
     handlerClickCompleted = (e, key) => {
@@ -20,10 +22,8 @@ class TaskList extends Component {
                 {
                     taskList.map((task, index) => {
                         return (
-                            <TaskItem taskName={task.name}
-                                      isDeleted={task.isDeleted}
-                                      isComplete={task.isComplete}
-                                      mouseInRange={task.mouseInRange}
+                            <TaskItem
+                                      {...task}
                                       index={index}
                                       key={index}
                                       handlerClickDel={this.handlerClickDel}

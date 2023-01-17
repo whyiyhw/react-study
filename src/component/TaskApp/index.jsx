@@ -11,26 +11,26 @@ class TaskApp extends Component {
         taskList: [
             {name: "123", isDeleted: false, isComplete: false},
             {name: "456", isDeleted: false, isComplete: false},
-            {name: "789", isDeleted: false, isComplete: false},
+            {name: "789", isDeleted: false, isComplete: true},
         ],
     }
 
     handlerKeyDown = (e) => {
         // 回车键  提交数据
-        if (e.keyCode === 13) {
-            const {taskList, inputValue} = this.state
-            if (inputValue.trim() === "") {
-                alert("输入不能为空")
-                return
-            }
+        if (e.keyCode !== 13) return;
 
-            taskList.push({name: inputValue, isDeleted: false, isComplete: false})
-
-            this.setState({
-                inputValue: "",
-                taskList: taskList
-            })
+        const {taskList, inputValue} = this.state
+        if (inputValue.trim() === "") {
+            alert("输入不能为空")
+            return
         }
+
+        taskList.push({name: inputValue, isDeleted: false, isComplete: false})
+
+        this.setState({
+            inputValue: "",
+            taskList: taskList
+        })
     }
 
     handlerChange = (e) => {
@@ -54,16 +54,24 @@ class TaskApp extends Component {
             taskList: taskList
         })
     }
+
     completedAll = (e) => {
         const val = e.target.checked
         let {taskList} = this.state
         taskList = taskList.map((task) => {
-            task.isComplete = val
-            return task;
+            return {...task, isComplete: val}
         })
         this.setState({
             taskList: taskList
         })
+    }
+
+    clearCompletedAll = () => {
+        let {taskList} = this.state
+        taskList = taskList.map((task) => {
+            return task.isComplete ? {...task, isDeleted: true} : task;
+        })
+        this.setState({taskList: taskList})
     }
 
     render() {
@@ -77,7 +85,8 @@ class TaskApp extends Component {
                           handlerClickDel={this.handlerClickDel}
                           handlerClickCompleted={this.handlerClickCompleted}
                 />
-                <TaskFooter taskList={taskList} completedAll={e => this.completedAll(e)}/>
+                <TaskFooter taskList={taskList} completedAll={this.completedAll}
+                            clearCompletedAll={this.clearCompletedAll}/>
             </div>
         );
     }
