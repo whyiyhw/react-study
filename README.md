@@ -7,11 +7,13 @@
 
 
 ### 引入第三方包却报错："无法找到模块 react "的声明文件
+
 方法一：安装库的TypeScript声明文件
+
 ```shell
 pnpm install -D @types/lib-name
-
 ```
-举个例子：`npm install @types/react --save-dev`
+
+举个例子：`pnpm install @types/react --save-dev`
 
 方法二，自定义 type 
