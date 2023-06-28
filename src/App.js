@@ -1,12 +1,13 @@
 import './App.css';
 import React, {Component} from "react";
-import Antd from "./component/Antd";
+import Count from "./containers/Count";
+import store from './redux/store';
 
 export default class App extends Component {
     render() {
         return (
             <div className="App">
-                <Antd/>
+                <Count store={store}/>
             </div>
         );
     }
