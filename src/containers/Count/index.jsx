@@ -1,4 +1,4 @@
-import  antd  from '../../component/Antd'
+import antd from '../../component/Antd'
 import { connect } from 'react-redux'
 import { createIncrementAction, createDecrementAction, createIncrementAsyncAction } from '../../redux/count_action'
 
@@ -7,16 +7,11 @@ import { createIncrementAction, createDecrementAction, createIncrementAsyncActio
 // 3. mapStateToProps用于传递状态
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(antd)
-
-function mapStateToProps(state) {
-    return { count: state }
-}
-
-function mapDispatchToProps(dispatch) {
-    return {
+export default connect(
+    state => ({ count: state }),
+    dispatch => ({
         jia: number => dispatch(createIncrementAction(number)),
         jian: number => dispatch(createDecrementAction(number)),
         jiaAsync: (number, time) => dispatch(createIncrementAsyncAction(number, time))
-    }
-}
+    })
+)(antd)
